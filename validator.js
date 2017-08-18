@@ -11,7 +11,6 @@ function validate(group) {
         return false;
       }
     }
-
     // Check if there are more than five occupants
     if (room.Occupants.length > 5) {
       return false;
@@ -52,23 +51,23 @@ const ageValidator = room => {
   return true;
 }
 
+const genderRule = new Rule(genderValidator, 'This is a two occupant room with occupants of different gender.')
+const maxOccRule = new Rule(maxOccupancy, 'This room has more than 5 occupants.')
+const ageRule = new Rule(ageValidator, 'The age difference between two or more more occupants is over ten years.')
 
-const genderRule = new Rule(genderValidator, "This is a two occupant room with occupants of different gender.")
-const maxOccRule = new Rule(maxOccupancy, "This room has more than 5 occupants.")
-const ageRule = new Rule(ageValidator, "The age difference between two or more more occupants is over ten years.")
+// the modularValidate function takes a TourGroup object and an array of Rule objects
+// it returns an object where:
+// keys are the room numbers of the tour group
+// values are either an array of string descriptors of issues, or the string 'No issues.'
 
-// the modularValidate function takes a TourGroup object an array of Rule objects
 function modularValidate(group, rules) {
-
   let roomIssues = {};
-  // roomIssues is an object where:
-  // keys are the room numbers of the tour group
-  // values are either an array of string descriptors of issues, or the string 'No issues.'
 
   // loop though each room in the tourgroup
   for (let i = 0; i < group.Rooms.length; i++) {
     const room = group.Rooms[i];
-    // initialize the value for each room to be an empty array
+
+    // initialize the value for each room property to be an empty array
     roomIssues[room.RoomNumber] = [];
 
     // run each rule validator function on the room
